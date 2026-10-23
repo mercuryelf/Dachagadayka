@@ -6,6 +6,7 @@ input[type="range"] {
   appearance: none;
   background: transparent;
   cursor: pointer;
+  outline: none;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
@@ -17,18 +18,19 @@ input[type="range"]::-webkit-slider-runnable-track {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   background: #26CD94;
   border-radius: 50%;
   border: 3px solid white;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  margin-top: -8px;
-  transition: transform 0.1s;
+  box-shadow: 0 2px 8px rgba(38, 205, 148, 0.4);
+  margin-top: -10px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:active {
-  transform: scale(1.2);
+  transform: scale(1.15);
+  box-shadow: 0 2px 12px rgba(38, 205, 148, 0.6);
 }
 
 input[type="range"]::-moz-range-track {
@@ -38,18 +40,28 @@ input[type="range"]::-moz-range-track {
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   background: #26CD94;
   border-radius: 50%;
   border: 3px solid white;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(38, 205, 148, 0.4);
 }
 
 input[type="range"]::-moz-range-progress {
   background: #26CD94;
   height: 8px;
   border-radius: 9999px;
+}
+
+/* Disabled state */
+input[type="range"]:disabled::-webkit-slider-thumb {
+  background: #9ca3af;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+input[type="range"]:disabled::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #9ca3af 0%, #9ca3af var(--range-progress, 14%), #e5e7eb var(--range-progress, 14%), #e5e7eb 100%);
 }
 
 /* Анимация bounce для эмодзи */
@@ -59,15 +71,37 @@ input[type="range"]::-moz-range-progress {
 }
 
 .animate-bounce {
-  animation: bounce 1s ease-in-out infinite;
+  animation: bounce 1.5s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
 }
 
 /* Утилиты */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Табличные числа для цен */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Плавные переходы */
@@ -76,6 +110,33 @@ input[type="range"]::-moz-range-progress {
 }
 
 /* Безопасная зона для мобильных */
+html, body {
+  overscroll-behavior: none;
+}
+
 body {
   padding-bottom: env(safe-area-inset-bottom);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Предотвращение zoom на iOS */
+@media screen and (max-width: 768px) {
+  input[type="range"] {
+    font-size: 16px;
+  }
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 2px;
 }
